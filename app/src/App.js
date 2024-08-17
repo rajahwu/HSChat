@@ -1,8 +1,9 @@
 // App.js
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import { blueGrey, deepOrange, grey, orange } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React, { useState } from "react";
+import { Outlet } from 'react-router-dom';
 import Footer from "./components/layouts/Footer";
 import Header from "./components/layouts/Header";
 import Sidebar from "./components/layouts/SideBar";
@@ -96,14 +97,6 @@ const funTheme = createTheme({
   },
 });
 
-const Content = () => (
-  <Paper elevation={3}>
-    <Box p={2}>
-      <Typography variant="h5">Content</Typography>
-    </Box>
-  </Paper>
-);
-
 export default function App() {
   const [currentTheme, setCurrentTheme] = useState(lightTheme);
 
@@ -142,7 +135,7 @@ export default function App() {
             <Sidebar />
           </Grid>
           <Grid item xs={9}>
-            <Content />
+            <Outlet />
           </Grid>
         </Grid>
       </Container>
