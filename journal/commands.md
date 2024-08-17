@@ -83,3 +83,8 @@ npm install dotenv-webpack --save-dev
 ```bash
 npm install react-router-dom
 ```
+
+```bash
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+```
