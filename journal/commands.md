@@ -74,3 +74,12 @@ module: {
   "presets": ["@babel/preset-env", "@babel/preset-react"]
 }
 ```
+
+```bash
+npm install dotenv --save
+npm install dotenv-webpack --save-dev
+```
+
+```bash
+npm install react-router-dom
+```
