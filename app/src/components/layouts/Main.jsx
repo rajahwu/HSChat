@@ -7,7 +7,17 @@ import Sidebar from './SideBar';
 export default function Main() {
     const { user } = useAuth();
     const location = useLocation();
-    const page = location.pathname.split('/').slice(-1)[0];
+
+    // Extract the pathname and split into segments
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    // Get the last segment safely
+    let pageTitle = pathSegments[pathSegments.length - 1] || '';
+
+    // Check if the last segment looks like an ID (modify regex as needed)
+    if (pageTitle && (pageTitle.length === 20 || pageTitle.length === 28)) {
+        // It's likely an ID; use the previous segment as the page title
+        pageTitle = pathSegments[pathSegments.length - 2] || 'Home'; // Default to 'Home' if there's no previous segment
+    }
 
     // Define the sidebar links
     const links = [
@@ -23,7 +33,7 @@ export default function Main() {
             <Grid container spacing={2}>
                 <Grid item xs={3}>
                     <Sidebar
-                        title={page}
+                        title={pageTitle}
                         links={links}
                     />
                 </Grid>

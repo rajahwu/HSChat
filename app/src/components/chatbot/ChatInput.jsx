@@ -1,10 +1,11 @@
 import { Box, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const ChatInput = () => {
   const { user } = useAuth();
+  const { sessionId } = useParams();
   const userId = user ? user.uid : "";
   const [inputValue, setInputValue] = useState("");
 
@@ -15,6 +16,7 @@ const ChatInput = () => {
   return (
     <Box component={Form} method="post" sx={{ mt: 2, display: "flex" }}>
       <input type="hidden" name="userId" value={userId} />
+      <input type="hidden" name="chatSessionId" value={sessionId || ""} />
       <TextField
         fullWidth
         name="message"

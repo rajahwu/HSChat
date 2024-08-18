@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { fetchChatSessions } from '../../services/chat/fetchChatSessions';
 
-const Sidebar = ({ title, links }) => {
+export default function Sidebar({ title, links }) {
     const [chatSessions, setChatSessions] = useState([]);
     const { user } = useAuth();
 
@@ -47,5 +47,3 @@ const Sidebar = ({ title, links }) => {
         </div>
     );
 };
-
-export default Sidebar;
