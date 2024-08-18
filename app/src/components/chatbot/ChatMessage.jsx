@@ -2,7 +2,6 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 const ChatMessage = ({ message }) => {
-  console.log(message);
   return (
     <Box
       sx={{
@@ -20,7 +19,12 @@ const ChatMessage = ({ message }) => {
           maxWidth: "60%"
         }}
       >
-        <Typography variant="body1">{message.text || "No message content"}</Typography>
+        <Typography variant="body1">
+          {message.text || "No message content"}
+        </Typography>
+        <Typography variant="caption" sx={{ display: 'block', textAlign: 'right', marginTop: '4px' }}>
+          {new Date(message.timestamp).toLocaleTimeString()}
+        </Typography>
       </Box>
     </Box>
   );

@@ -8,9 +8,13 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import SignOut from "./components/auth/SignOut";
 import Chat from "./components/chatbot/Chat";
+import ChatSession from "./components/chatbot/ChatSession";
 import { action as LoginAction } from "./router/actions/auth/login";
 import { action as RegisterAction } from "./router/actions/auth/register";
 import { action as SignOutAction } from "./router/actions/auth/signout";
+import { action as sendMessageAction } from "./router/actions/chatbot/sendMessage";
+import { loader as chatLoader } from "./router/loaders/chatbot/chat";
+import { loader as chatSessionLoader } from "./router/loaders/chatbot/session";
 
 
 const Content = ({ children }) => (
@@ -43,7 +47,8 @@ const router = createBrowserRouter([
                 { path: "bookings", element: <Bookings /> },
                 { path: "requests", element: <Requests /> },
                 { path: "settings", element: <Settings /> },
-                { path: "chat", element: <Chat /> },
+                { path: "chat", element: <Chat />, loader: chatLoader, action: sendMessageAction },
+                { path: "chat/:sessionId", element: <ChatSession />, loader: chatSessionLoader, action: sendMessageAction },
                 { path: "signout", element: <SignOut />, action: SignOutAction },
             ]
         },
