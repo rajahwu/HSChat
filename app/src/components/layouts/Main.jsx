@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -19,16 +19,18 @@ export default function Main() {
     ];
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={3}>
-                <Sidebar
-                    title={page}
-                    links={links}
-                />
+        <Container sx={{ padding: '2em' }}>
+            <Grid container spacing={2}>
+                <Grid item xs={3}>
+                    <Sidebar
+                        title={page}
+                        links={links}
+                    />
+                </Grid>
+                <Grid item xs={9}>
+                    <Outlet />
+                </Grid>
             </Grid>
-            <Grid item xs={9}>
-                <Outlet />
-            </Grid>
-        </Grid>
+        </Container>
     );
 }

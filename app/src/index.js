@@ -7,6 +7,7 @@ import App from "./App";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import SignOut from "./components/auth/SignOut";
+import Chat from "./components/chatbot/Chat";
 import { action as LoginAction } from "./router/actions/auth/login";
 import { action as RegisterAction } from "./router/actions/auth/register";
 import { action as SignOutAction } from "./router/actions/auth/signout";
@@ -24,7 +25,6 @@ const Home = () => <Content>Home</Content>;
 const Dashboard = () => <Content>Dashboard</Content>;
 const Bookings = () => <Content>Bookings</Content>;
 const Requests = () => <Content>Requests</Content>;
-const Chat = () => <Content>Chat</Content>;
 const Settings = () => <Content>Settings</Content>;
 
 const domNode = document.getElementById("root");
