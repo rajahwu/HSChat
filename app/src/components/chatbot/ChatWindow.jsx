@@ -1,42 +1,53 @@
 import { Box } from '@mui/material';
 import React, { useState } from 'react';
+import { chatbotModel } from '../../services/gemini'; // Adjust the path as needed
 import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 
 export default function ChatWindow() {
     const [messages, setMessages] = useState([]);
 
-    const handleSendMessage = (newMessage) => {
+    const handleSendMessage = async (newMessage) => {
         // Add the user's message to the chat
         setMessages((prevMessages) => [
             ...prevMessages,
             { text: newMessage, sender: "user" }
         ]);
 
-        // Simulate a bot response after a short delay
-        setTimeout(() => {
-            let botResponse = "";
+        try {
+            // Fetch the bot's response from the AI model
+            const result = await chatbotModel.generateContent(newMessage);
+            console.log('AI response:', result); // Log the full response
 
-            switch (newMessage.toLowerCase()) {
-                case "hello":
-                    botResponse = "Hello! How can I assist you?";
-                    break;
-                case "how are you?":
-                    botResponse = "I'm just a bot, but I'm here to help!";
-                    break;
-                case "what can you do?":
-                    botResponse = "I can help you with your bookings, requests, and more.";
-                    break;
-                default:
-                    botResponse = "I'm not sure how to respond to that. Can you ask something else?";
+            // Access the nested response object
+            const response = result.response;
+            if (
+                response &&
+                response.candidates &&
+                response.candidates[0] &&
+                response.candidates[0].content &&
+                response.candidates[0].content.parts[0]
+            ) {
+                const botResponse = response.candidates[0].content.parts[0].text || "Sorry, I didn't understand that.";
+                // Add the bot's response to the chat
+                setMessages((prevMessages) => [
+                    ...prevMessages,
+                    { text: botResponse, sender: "bot" }
+                ]);
+            } else {
+                console.error('Unexpected response format:', response);
+                setMessages((prevMessages) => [
+                    ...prevMessages,
+                    { text: "Sorry, I didn't understand that.", sender: "bot" }
+                ]);
             }
-
-            // Add the bot's response to the chat
+        } catch (error) {
+            console.error("Error fetching bot response:", error);
             setMessages((prevMessages) => [
                 ...prevMessages,
-                { text: botResponse, sender: "bot" }
+                { text: "There was an error processing your request.", sender: "bot" }
             ]);
-        }, 1000); // Delay the bot's response by 1 second
+        }
     };
 
     return (
