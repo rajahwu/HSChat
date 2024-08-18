@@ -1,12 +1,12 @@
 // App.js
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import { blueGrey, deepOrange, grey, orange } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React, { useState } from "react";
-import { Outlet } from 'react-router-dom';
-import Footer from "./components/layouts/Footer";
-import Header from "./components/layouts/Header";
-import Sidebar from "./components/layouts/SideBar";
+import Footer from './components/layouts/Footer';
+import Header from './components/layouts/Header';
+import Main from './components/layouts/Main';
+import { AuthProvider } from './context/AuthContext';
 
 const lightTheme = createTheme({
   palette: {
@@ -127,19 +127,15 @@ export default function App() {
   };
 
   return (
+
     <ThemeProvider theme={currentTheme}>
-      <Header onThemeChange={handleThemeChange} />
-      <Container maxWidth="lg" sx={{ marginTop: 2, marginBottom: 2 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Sidebar />
-          </Grid>
-          <Grid item xs={9}>
-            <Outlet />
-          </Grid>
-        </Grid>
-      </Container>
-      <Footer />
+      <AuthProvider>
+        <Header onThemeChange={handleThemeChange} />
+        <Container maxWidth="lg" sx={{ marginTop: 2, marginBottom: 2 }}>
+          <Main />
+        </Container>
+        <Footer />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

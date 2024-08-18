@@ -2,8 +2,11 @@
 import { AppBar, Button, Toolbar, Typography } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Header({ onThemeChange }) {
+  const { user } = useAuth();
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -11,13 +14,21 @@ export default function Header({ onThemeChange }) {
           HS Chat
         </Typography>
 
+      {user ? (
         <nav> {/* Navigation links */}
-          <Button color="inherit" component={NavLink} to="/dashboard">Dashboard</Button>
-          <Button color="inherit" component={NavLink} to="/bookings">Book An Appointment</Button>
-          <Button color="inherit" component={NavLink} to="/requests">Request Custom Order</Button>
-          <Button color="inherit" component={NavLink} to="/settings">Settings</Button>
-          <Button color="inherit" component={NavLink} to="/chat">Chat</Button>
+          <Button color="inherit" component={NavLink} to={`${user.displayName}/dashboard`}>Dashboard</Button>
+          <Button color="inherit" component={NavLink} to={`${user.displayName}/bookings`}>Book An Appointment</Button>
+          <Button color="inherit" component={NavLink} to={`${user.displayName}/requests`}>Request Custom Order</Button>
+          <Button color="inherit" component={NavLink} to={`${user.displayName}/settings`}>Settings</Button>
+          <Button color="inherit" component={NavLink} to={`${user.displayName}/chat`}>Chat</Button>
+          <Button color="inherit" component={NavLink} to={`${user.displayName}/signout`}>Sign Out</Button>
         </nav>
+      ) : (
+        <nav>
+          <Button color="inherit" component={NavLink} to="/login">Login</Button>
+          <Button color="inherit" component={NavLink} to="/register">Sign Up</Button>
+        </nav>
+      )}
 
         {/* Theme selection */}
         <select onChange={onThemeChange}>

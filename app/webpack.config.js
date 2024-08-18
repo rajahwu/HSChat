@@ -8,20 +8,23 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html'),
     }),
     new Dotenv({
-      path: './.env'
+      path: './.env',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   module: {
     rules: [
       {
-        test: /\.(js$|jsx)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -47,8 +50,5 @@ module.exports = {
   devServer: {
     port: 3000,
     historyApiFallback: true,
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
   },
 };
