@@ -1,7 +1,7 @@
-// webpack.config.js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -16,6 +16,12 @@ module.exports = {
     }),
     new Dotenv({
       path: './.env',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public/assets', to: 'assets' }, // Adjust paths as needed
+        { from: 'public/favicon.ico', to: 'favicon.ico' },
+      ],
     }),
   ],
   resolve: {
@@ -36,14 +42,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-          },
-        ],
       },
     ],
   },
