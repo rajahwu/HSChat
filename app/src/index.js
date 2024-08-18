@@ -36,17 +36,15 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
             { index: true, element: <Home /> },
-
             { path: "register", element: <Register />, action: RegisterAction },
             { path: "login", element: <Login />, action: LoginAction },
-            { path: "signout", element: <SignOut />, action: SignOutAction },
-
             { path: ":username", children: [
                 { path: "dashboard", element: <Dashboard /> },
                 { path: "bookings", element: <Bookings /> },
                 { path: "requests", element: <Requests /> },
                 { path: "settings", element: <Settings /> },
                 { path: "chat", element: <Chat /> },
+                { path: "signout", element: <SignOut />, action: SignOutAction },
             ]
         },
 

@@ -26,7 +26,7 @@ export default function SignOut() {
         <Typography variant="body1" paragraph>
           Are you sure you want to sign out?
         </Typography>
-        <Form method="post" action="/signout">
+        <Form method="post">
           <Button
             type="submit"
             variant="contained"
