@@ -6,7 +6,6 @@ import React, { useState } from "react";
 import Footer from './components/layouts/Footer';
 import Header from './components/layouts/Header';
 import Main from './components/layouts/Main';
-import { AuthProvider } from './context/AuthContext';
 
 const lightTheme = createTheme({
   palette: {
@@ -168,13 +167,11 @@ export default function App() {
   return (
 
     <ThemeProvider theme={currentTheme}>
-      <AuthProvider>
         <Header onThemeChange={handleThemeChange} />
         <Container maxWidth="lg" sx={{ marginTop: 2, marginBottom: 2 }}>
           <Main />
         </Container>
         <Footer />
-      </AuthProvider>
     </ThemeProvider>
   );
 }

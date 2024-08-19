@@ -1,15 +1,38 @@
 // src/pages/BookAppointment.jsx
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Button, Container, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { Form } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const BookAppointment = () => {
+  const { user } = useAuth();
   const [appointmentDetails, setAppointmentDetails] = useState({
     name: '',
     email: '',
     date: '',
     time: '',
-    notes: ''
+    notes: '',
+    duration: '',
   });
+
+  const durationOptions = [];
+  for (let i = 1; i <= 8; i++) { // 8 blocks of 15 minutes
+    const durationInMinutes = i * 15;
+    durationOptions.push({
+      value: durationInMinutes,
+      label: `${durationInMinutes} minutes`,
+    });
+  }
+
+  const appointmentTypes = [
+    { value: 'consult', label: 'Consultation' },
+    { value: 'cut', label: 'Cut' },
+    { value: 'extension', label: 'Extension' },
+    { value: 'perm', label: 'Perm' },
+    { value: 'color', label: 'Color' },
+    { value: 'special', label: 'Special' },
+  ];
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,18 +42,13 @@ const BookAppointment = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle booking logic here, e.g., send details to Firestore
-    console.log('Booking details:', appointmentDetails);
-  };
-
   return (
     <Container sx={{ padding: '2em' }}>
       <Typography variant="h4" gutterBottom>
         Book an Appointment
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <Form method="post">
+        {user && <input type="hidden" name="userId" value={user.id} />}
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -81,6 +99,40 @@ const BookAppointment = () => {
               required
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <InputLabel id="duration-label">Duration</InputLabel>
+            <Select
+              labelId="duration-label"
+              name="duration"
+              value={appointmentDetails.duration || ''}
+              onChange={handleChange}
+              required
+              fullWidth
+            >
+              {durationOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <InputLabel id="appointment-type-label">Appointment Type</InputLabel>
+            <Select
+              labelId="appointment-type-label"
+              name="type"
+              value={appointmentDetails.type || ''}
+              onChange={handleChange}
+              required
+              fullWidth
+            >
+              {appointmentTypes.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -98,7 +150,7 @@ const BookAppointment = () => {
             </Button>
           </Grid>
         </Grid>
-      </form>
+      </Form>
     </Container>
   );
 };

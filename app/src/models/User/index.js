@@ -3,10 +3,14 @@ import { createAvatar } from '@dicebear/core';
 import axios from 'axios'; // Ensure axios is imported
 import { createUserWithEmailAndPassword, deleteUser, updateProfile } from "firebase/auth";
 import {
+  collection,
   deleteDoc,
   doc,
+  getDocs,
+  query,
   setDoc,
-  updateDoc
+  updateDoc,
+  where,
 } from "firebase/firestore";
 import { deleteObject, getDownloadURL, ref, uploadString } from "firebase/storage"; // Import Firebase Storage methods
 import { auth, db, storage } from "../../services/firebase"; // Import the storage service
@@ -131,6 +135,26 @@ class User {
       throw new Error('Failed to delete user');
     }
   }
+  static async getByUsername(username) {
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where('displayName', '==', username));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        throw new Error(`User with username ${username} not found`);
+      }
+
+      // Assuming usernames are unique, there should be only one matching document
+      const doc = querySnapshot.docs[0];
+      const data = doc.data();
+      return new User(doc.id, data.email, data.displayName, data.photoURL);
+    } catch (error) {
+      console.error("Error getting user by username: ", error.message);
+      throw new Error('Failed to get user by username');
+    }
+  }
+
 }
 
 export { User };

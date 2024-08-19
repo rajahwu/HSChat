@@ -1,10 +1,14 @@
 // src/pages/Dashboard.jsx
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import React from 'react';
+import { useLoaderData } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const { nextAppointment, timeRemaining } = useLoaderData();
+  console.log(timeRemaining);
+
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h4" gutterBottom>
@@ -55,7 +59,6 @@ const Dashboard = () => {
             </Box>
           </Paper>
         </Grid>
-        {/* Cards 2 and 3 - Stacked */}
         <Grid item xs={12} sm={6}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -66,8 +69,9 @@ const Dashboard = () => {
                   color: theme.palette.text.primary,
                 })}
               >
-                <Typography variant="h6">Next Appointment</Typography>
-                <Typography variant="body1">Time to next appointment.</Typography>
+                <Typography variant="h6">Next Appointment: {nextAppointment.date.toLocaleString()}</Typography>
+                <Typography variant="h6">{nextAppointment.name}: {nextAppointment.duration} minutes</Typography>
+                <Typography variant="body1">Meeting in: {timeRemaining}</Typography>
               </Paper>
             </Grid>
             <Grid item xs={12}>
