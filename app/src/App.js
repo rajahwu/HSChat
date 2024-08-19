@@ -169,7 +169,7 @@ export default function App() {
     <ThemeProvider theme={currentTheme}>
         <Header onThemeChange={handleThemeChange} />
         <Container maxWidth="lg" sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Main />
+          <Main onThemeChange={handleThemeChange} />
         </Container>
         <Footer />
     </ThemeProvider>

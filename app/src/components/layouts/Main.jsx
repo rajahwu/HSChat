@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import Sidebar from './SideBar';
 
-export default function Main() {
+export default function Main({ onThemeChange }) {
     const { user } = useAuth();
     const location = useLocation();
 
@@ -42,6 +42,18 @@ export default function Main() {
         { text: 'Past Orders', href: '/custom-orders/past-orders' },
     ];
 
+    const settingsSidebarLinks = [
+        { text: 'Profile', href: 'profile' },
+        { text: 'Account', href: 'account' },
+        { text: 'Back to Dashboard', href: 'dashboard' },
+    ];
+
+    const profileSidebarLinks = [
+        { text: 'Settings', href: 'settings' },
+        { text: 'Account', href: 'account' },
+        { text: 'Back to Dashboard', href: 'dashboard' },
+    ];
+
     switch (pageTitle.toLowerCase()) {
         case 'dashboard':
             links = dashboardSidebarLinks;
@@ -51,6 +63,12 @@ export default function Main() {
             break;
         case 'custom-orders':
             links = customOrdersSidebarLinks;
+            break;
+        case 'settings':
+            links = settingsSidebarLinks;
+            break;
+        case 'profile':
+            links = profileSidebarLinks;
             break;
         default:
             links = [];
@@ -84,7 +102,7 @@ export default function Main() {
                     )}
                 </Grid>
                 <Grid item xs={9}>
-                    <Outlet />
+                    <Outlet context={{ onThemeChange }} />
                 </Grid>
             </Grid>
         </Container>

@@ -1,9 +1,11 @@
 import { Box, Button, FormControl, FormControlLabel, Radio, RadioGroup, Switch, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-export default function SettingsPage({ onThemeChange }) {
+export default function SettingsPage() {
     const { user } = useAuth();
+    const { onThemeChange } = useOutletContext();
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [privacyMode, setPrivacyMode] = useState(false);
     const [selectedTheme, setSelectedTheme] = useState('light');
