@@ -13,6 +13,7 @@ import ChatSession from "./components/chatbot/ChatSession";
 import Booking from "./components/root/Booking";
 import CustomOrder from "./components/root/CustomOrder";
 import Dashboard from "./components/root/Dashboard";
+import Home from "./components/root/Home";
 import Profile from "./components/root/Profile";
 import Settings from "./components/root/Settings";
 import { AuthProvider } from "./context/AuthContext";
@@ -32,8 +33,6 @@ const Content = ({ children }) => (
         </Box>
     </Paper>
 );
-
-const Home = () => <Content>Home</Content>;
 
 const domNode = document.getElementById("root");
 const root = createRoot(domNode);

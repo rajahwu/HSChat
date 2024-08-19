@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -55,15 +55,33 @@ export default function Main() {
         default:
             links = [];
     }
-
+    console.log('pageTitle:', pageTitle);
     return (
         <Container sx={{ padding: '2em' }}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2}
+                sx={{
+                    backgroundImage: pageTitle === "" ? `url(/assets/home.jpg)` : "", // Set the background image
+                    backgroundSize: 'cover', // Cover the entire Box
+                    backgroundPosition: 'center', // Center the image
+                }}
+            >
                 <Grid item xs={3}>
-                    <Sidebar
-                        title={pageTitle}
-                        links={links}
-                    />
+                    {pageTitle.toLowerCase() === '' ? (
+                        <Box
+                            sx={{
+                                backgroundImage: `url(/assets/home.jpg)`, // Set the background image
+                                backgroundSize: 'cover', // Cover the entire Box
+                                backgroundPosition: 'center', // Center the image
+                                height: '52vh', // Make it take up full viewport height (adjust as needed)
+                            }}
+                        />
+                    ) : (
+
+                        <Sidebar
+                            title={pageTitle}
+                            links={links}
+                        />
+                    )}
                 </Grid>
                 <Grid item xs={9}>
                     <Outlet />

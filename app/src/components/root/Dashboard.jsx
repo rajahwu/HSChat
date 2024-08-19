@@ -1,13 +1,36 @@
 // src/pages/Dashboard.jsx
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+
+dayjs.extend(relativeTime);
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const { nextAppointment, timeRemaining } = useLoaderData();
-  console.log(timeRemaining);
+  const { nextAppointment } = useLoaderData();
+
+  const appointmentDetails = nextAppointment ? (
+    <>
+      <Typography variant="h6">Next Appointment</Typography>
+      <Typography variant="h6">{dayjs(nextAppointment.date).fromNow()}</Typography>
+      <Typography variant="body1">for {nextAppointment.name}: {nextAppointment.type}</Typography>
+      <Typography variant="body1">on {dayjs(nextAppointment.date).format('dddd, MMMM, D')}</Typography>
+      <Typography variant="body1"> at {dayjs(nextAppointment.date).format('h:mm A')}</Typography>
+    </>
+  ) : (
+    <Box sx={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <Typography variant="body1">No upcoming appointments</Typography>
+      <Button variant="contained" color="primary" component={Link} to={`/${user.displayName}/bookings`}>Book an appointment</Button>
+    </Box>
+  );
 
   return (
     <Box sx={{ padding: 3 }}>
@@ -69,9 +92,7 @@ const Dashboard = () => {
                   color: theme.palette.text.primary,
                 })}
               >
-                <Typography variant="h6">Next Appointment: {nextAppointment.date.toLocaleString()}</Typography>
-                <Typography variant="h6">{nextAppointment.name}: {nextAppointment.duration} minutes</Typography>
-                <Typography variant="body1">Meeting in: {timeRemaining}</Typography>
+                {appointmentDetails}
               </Paper>
             </Grid>
             <Grid item xs={12}>

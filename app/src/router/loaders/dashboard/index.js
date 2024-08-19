@@ -14,7 +14,6 @@ export async function loader({ username }) {
 
     try {
         const appointments = await Appointment.fetchByUserId(user.id);
-        console.log('Appointments:', appointments);
 
         // Filter for future appointments and sort by date/time
         const futureAppointments = appointments.filter(appointment => {
@@ -30,22 +29,11 @@ export async function loader({ username }) {
             return appointmentDateTime > nowUTC;
         });
 
-        console.log('Future appointments:', futureAppointments);
+        const nextAppointment = futureAppointments[0];
 
-        const nextAppointment = futureAppointments[0]; // Get the first (soonest) appointment
-
-        console.log('Next appointment:', nextAppointment);
         if (nextAppointment) {
-            // Calculate time remaining until the appointment
-            const now = new Date();
-            const appointmentDateTime = new Date(nextAppointment.date);
-            appointmentDateTime.setHours(nextAppointment.time.split(':')[0]);
-            appointmentDateTime.setMinutes(nextAppointment.time.split(':')[1]);
-            const timeRemaining = appointmentDateTime - now;
-
             return json({
                 nextAppointment,
-                timeRemaining,
             });
         } else {
             return json({ nextAppointment: null }); // No upcoming appointments
