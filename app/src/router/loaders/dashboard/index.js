@@ -3,9 +3,7 @@ import { Appointment } from '../../../models/Appointment';
 import { User } from '../../../models/User';
 
 export async function loader({ username }) {
-    console.log('Dashboard loader');
     const user = await User.getByUsername(username);
-    console.log('User:', user);
 
     if (!user) {
         // Handle the case where the user is not authenticated

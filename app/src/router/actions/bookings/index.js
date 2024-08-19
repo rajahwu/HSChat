@@ -1,5 +1,5 @@
-import { auth } from "../../../services/firebase";
 import { Appointment } from "../../../models/Appointment";
+import { auth } from "../../../services/firebase";
 
 export async function action({ request }) {
     const formData = await request.formData();
@@ -24,11 +24,8 @@ export async function action({ request }) {
             data.type
         );
 
-        console.log('Appointment booked successfully!');
-        // You might want to redirect or show a success message here
     } catch (error) {
         console.error('Error booking appointment:', error);
-        // Handle the error appropriately
     }
 
     return null;

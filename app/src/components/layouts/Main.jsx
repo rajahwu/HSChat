@@ -73,7 +73,7 @@ export default function Main({ onThemeChange }) {
         default:
             links = [];
     }
-    console.log('pageTitle:', pageTitle);
+
     return (
         <Container sx={{ padding: '2em' }}>
             <Grid container spacing={2}

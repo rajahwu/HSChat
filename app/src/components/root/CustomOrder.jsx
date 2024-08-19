@@ -23,7 +23,6 @@ export default function CustomOrder() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., send data to backend)
-    console.log('Form submitted:', formData);
   };
 
   return (
