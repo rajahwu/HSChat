@@ -9,6 +9,11 @@ import Register from "./components/auth/Register";
 import SignOut from "./components/auth/SignOut";
 import Chat from "./components/chatbot/Chat";
 import ChatSession from "./components/chatbot/ChatSession";
+import Booking from "./components/root/Booking";
+import CustomOrder from "./components/root/CustomOrder";
+import Dashboard from "./components/root/Dashboard";
+import Profile from "./components/root/Profile";
+import Settings from "./components/root/Settings";
 import { action as LoginAction } from "./router/actions/auth/login";
 import { action as RegisterAction } from "./router/actions/auth/register";
 import { action as SignOutAction } from "./router/actions/auth/signout";
@@ -26,10 +31,6 @@ const Content = ({ children }) => (
 );
 
 const Home = () => <Content>Home</Content>;
-const Dashboard = () => <Content>Dashboard</Content>;
-const Bookings = () => <Content>Bookings</Content>;
-const Requests = () => <Content>Requests</Content>;
-const Settings = () => <Content>Settings</Content>;
 
 const domNode = document.getElementById("root");
 const root = createRoot(domNode);
@@ -44,9 +45,10 @@ const router = createBrowserRouter([
             { path: "login", element: <Login />, action: LoginAction },
             { path: ":username", children: [
                 { path: "dashboard", element: <Dashboard /> },
-                { path: "bookings", element: <Bookings /> },
-                { path: "requests", element: <Requests /> },
+                { path: "bookings", element: <Booking /> },
+                { path: "custom-orders", element: <CustomOrder /> },
                 { path: "settings", element: <Settings /> },
+                { path: "profile", element: <Profile /> },
                 { path: "chat", element: <Chat />, loader: chatLoader, action: sendMessageAction },
                 { path: "chat/:sessionId", element: <ChatSession />, loader: chatSessionLoader, action: sendMessageAction },
                 { path: "signout", element: <SignOut />, action: SignOutAction },

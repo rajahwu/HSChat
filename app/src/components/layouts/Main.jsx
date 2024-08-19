@@ -20,13 +20,41 @@ export default function Main() {
     }
 
     // Define the sidebar links
-    const links = [
+    let links = [
         { text: 'Dashboard', href: '/dashboard' },
         { text: 'Bookings', href: '/bookings' },
-        { text: 'Requests', href: '/requests' },
+        { text: 'Custom Orders', href: '/custom-orders' },
         { text: 'Chat', href: '/chat' },
-        { text: 'Settings', href: '/settings' }
     ];
+
+    const dashboardSidebarLinks = [
+        { text: 'Profile', href: 'profile' },
+        { text: 'Settings', href: 'settings' },
+    ];
+
+    const bookingsSidebarLinks = [
+        { text: 'Available Dates', href: '/bookings/available-dates' },
+        { text: 'Booked Appointments', href: '/bookings/booked-appointments' },
+    ];
+
+    const customOrdersSidebarLinks = [
+        { text: 'Order Types', href: '/custom-orders/order-types' },
+        { text: 'Past Orders', href: '/custom-orders/past-orders' },
+    ];
+
+    switch (pageTitle.toLowerCase()) {
+        case 'dashboard':
+            links = dashboardSidebarLinks;
+            break;
+        case 'bookings':
+            links = bookingsSidebarLinks;
+            break;
+        case 'custom-orders':
+            links = customOrdersSidebarLinks;
+            break;
+        default:
+            links = [];
+    }
 
     return (
         <Container sx={{ padding: '2em' }}>

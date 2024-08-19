@@ -34,9 +34,8 @@ export default function Header({ onThemeChange }) {
           <nav> {/* Navigation links */}
             <Button color="inherit" component={NavLink} to={`${user.displayName}/dashboard`}>Dashboard</Button>
             <Button color="inherit" component={NavLink} to={`${user.displayName}/bookings`}>Book An Appointment</Button>
-            <Button color="inherit" component={NavLink} to={`${user.displayName}/requests`}>Request Custom Order</Button>
+            <Button color="inherit" component={NavLink} to={`${user.displayName}/custom-orders`}>Request Custom Order</Button>
             <Button color="inherit" component={NavLink} to={`${user.displayName}/chat`}>Chat</Button>
-            <Button color="inherit" component={NavLink} to={`${user.displayName}/settings`}>Settings</Button>
             <Button color="inherit" component={NavLink} to={`${user.displayName}/signout`}>Sign Out</Button>
           </nav>
         ) : (
