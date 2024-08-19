@@ -2,7 +2,8 @@
 import { Container } from '@mui/material';
 import { blueGrey, deepOrange, grey, orange } from '@mui/material/colors';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import React, { useState } from "react";
+import Cookies from 'js-cookie';
+import React, { useEffect, useState } from "react";
 import Footer from './components/layouts/Footer';
 import Header from './components/layouts/Header';
 import Main from './components/layouts/Main';
@@ -28,7 +29,7 @@ const lightTheme = createTheme({
 });
 
 const darkTheme = createTheme({
-   palette: {
+  palette: {
     mode: 'dark',
     primary: {
       main: '#303f9f', // Dark blue
@@ -71,7 +72,7 @@ const highContrastTheme = createTheme({
 });
 
 const retroTheme = createTheme({
-   palette: {
+  palette: {
     primary: {
       main: orange[500],
     },
@@ -93,7 +94,7 @@ const retroTheme = createTheme({
 });
 
 const modernTheme = createTheme({
-   palette: {
+  palette: {
     primary: {
       main: '#00695c', // Teal
     },
@@ -137,41 +138,73 @@ const funTheme = createTheme({
 });
 
 export default function App() {
-  const [currentTheme, setCurrentTheme] = useState(lightTheme);
+  const getInitialTheme = () => {
+    const savedTheme = Cookies.get('theme');
+    switch (savedTheme) {
+      case 'dark':
+        return darkTheme;
+      case 'highContrast':
+        return highContrastTheme;
+      case 'retro':
+        return retroTheme;
+      case 'modern':
+        return modernTheme;
+      case 'fun':
+        return funTheme;
+      default:
+        return lightTheme;
+    }
+  };
+  const [currentTheme, setCurrentTheme] = useState(getInitialTheme);
 
   const handleThemeChange = (theme) => {
     switch (theme) {
       case 'light':
         setCurrentTheme(lightTheme);
+        Cookies.set('theme', 'light', { expires: 365 });
         break;
       case 'dark':
         setCurrentTheme(darkTheme);
+        Cookies.set('theme', 'dark', { expires: 365 });
         break;
       case 'highContrast':
         setCurrentTheme(highContrastTheme);
+        Cookies.set('theme', 'highContrast', { expires: 365 });
         break;
       case 'retro':
         setCurrentTheme(retroTheme);
+        Cookies.set('theme', 'retro', { expires: 365 });
         break;
       case 'modern':
         setCurrentTheme(modernTheme);
+        Cookies.set('theme', 'modern', { expires: 365 });
         break;
       case 'fun':
         setCurrentTheme(funTheme);
+        Cookies.set('theme', 'fun', { expires: 365 });
         break;
       default:
         setCurrentTheme(lightTheme);
+        Cookies.set('theme', 'light', { expires: 365 });
     }
   };
+
+  useEffect(() => {
+    const savedTheme = Cookies.get('theme');
+    if (savedTheme) {
+      handleThemeChange(savedTheme);
+    }
+  }, []);
+
 
   return (
 
     <ThemeProvider theme={currentTheme}>
-        <Header onThemeChange={handleThemeChange} />
-        <Container maxWidth="lg" sx={{ marginTop: 2, marginBottom: 2 }}>
-          <Main onThemeChange={handleThemeChange} />
-        </Container>
-        <Footer />
+      <Header onThemeChange={handleThemeChange} />
+      <Container maxWidth="lg" sx={{ marginTop: 2, marginBottom: 2 }}>
+        <Main onThemeChange={handleThemeChange} />
+      </Container>
+      <Footer />
     </ThemeProvider>
   );
 }
