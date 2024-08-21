@@ -26,14 +26,6 @@ import { loader as chatLoader } from "./router/loaders/chatbot/chat";
 import { loader as chatSessionLoader } from "./router/loaders/chatbot/session";
 import { loader as dashboardLoader } from "./router/loaders/dashboard";
 
-const Content = ({ children }) => (
-    <Paper elevation={3}>
-        <Box p={2}>
-            <Typography variant="h5">{children}</Typography>
-        </Box>
-    </Paper>
-);
-
 const domNode = document.getElementById("root");
 const root = createRoot(domNode);
 

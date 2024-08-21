@@ -19,7 +19,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'public/assets', to: 'assets' }, // Adjust paths as needed
+        { from: 'public/assets', to: 'assets' },
         { from: 'public/favicon.ico', to: 'favicon.ico' },
       ],
     }),
